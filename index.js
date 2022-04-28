@@ -1,1 +1,1 @@
-document.querySelector('text').innerHTML = "Hallo"
+document.querySelector('.text').innerHTML = "Hallo"
