@@ -15,11 +15,14 @@ document.getElementById('form').onsubmit = (e) => {
         "-": 0
     }
     
+    var p_error = document.getElementById('error')
     
-    if(sequence.length !== 8) return console.log('Invalid Sequence')
-    if(!sequence.match('[ABC-]{8}')) return console.log('Not Matching')
+    if(sequence.length !== 8) return p_error.innerText += 'Invalid Sequence'
+    if(!sequence.match('[ABC-]{8}')) return p_error.innerText += 'Not Matching'
 
     var ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if(!ctx) return p_error.innerText += 'AudioContext missing'
+    try{
     var osc = ctx.createOscillator()
     var gain = ctx.createGain()
     osc.type = "sine"
@@ -35,4 +38,8 @@ document.getElementById('form').onsubmit = (e) => {
 
     osc.start()
     osc.stop(sequence.length*SOUND_LENGTH*ROTATION/1000)
+    
+    }catch(error){
+        return p_error.innerText += error
+    }
 }
